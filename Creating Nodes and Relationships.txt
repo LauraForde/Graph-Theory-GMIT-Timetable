@@ -1,0 +1,329 @@
+<!--- CREATING NODES --->
+
+//Creating Module nodes from file
+LOAD  CSV WITH HEADERS FROM "file:///Modules.csv" AS line
+CREATE (n:Module {name: line.Module, semester: line.Semester})
+
+// Creating Lecturer nodes from file
+LOAD CSV WITH HEADERS FROM "file:///Lecturer.csv" AS line
+CREATE (n:Lecturer {name: line.Lecturer})
+
+// Creating Group nodes from file
+LOAD CSV WITH HEADERS FROM "file:///Groups.csv" AS line
+CREATE (n:Group {group: line.Gid})
+
+// Creating Room nodes from file
+LOAD CSV WITH HEADERS FROM "file:///Rooms.csv" AS line
+CREATE (n:Room {room: line.Room, type: line.Type})
+
+// Creating Day and Time nodes from file
+LOAD CSV WITH HEADERS FROM "file:///DaysTimes.csv" AS line
+CREATE (n:DayTime {dt: line.DayTime})
+
+
+<!--- CREATING RELATIONSHIPS --->
+#### MODULE & LECTURER #### 
+//1.
+MATCH (l:Lecturer { name: 'Ian McLoughlin' }), (m:Module { name: 'Graph Theory' })
+MERGE (l)-[:TEACHES]->(m)
+
+//2.
+MATCH (l:Lecturer { name: 'Martin Hynes' }), (m:Module { name: 'Software Testing' })
+MERGE (l)-[:TEACHES]->(m)
+
+//3.
+MATCH (l:Lecturer { name: 'Gerard Harrison' }), (m:Module { name: 'Server Side RAD' })
+MERGE (l)-[:TEACHES]->(m)
+
+//4.
+MATCH (l:Lecturer { name: 'Deirdre ODonovan' }), (m:Module { name: 'Database Management Systems' })
+MERGE (l)-[:TEACHES]->(m)
+
+//5.
+MATCH (l:Lecturer { name: 'Damien Costello' }), (m:Module { name: 'Mobile Application Development 2' })
+MERGE (l)-[:TEACHES]->(m)
+
+
+
+#### MODULE & DAYTIME ####
+//1.
+MATCH (m:Module {name:"Database Management Systems"}), (d:DayTime {dt:"Monday 10am - 11am"}) MERGE (m)-[:TUAGHT_AT]->(d)
+
+//2.
+MATCH (m:Module {name:"Mobile Application Development 2"}), (d:DayTime {dt:"Monday 12pm - 2pm"}) MERGE (m)-[:TUAGHT_AT]->(d)
+
+//3.
+MATCH (m:Module {name:"Graph Theory"}), (d:DayTime {dt:"Monday 2pm - 3pm"}) MERGE (m)-[:TUAGHT_AT]->(d)
+
+//4.
+MATCH (m:Module {name:"Software Testing"}), (d:DayTime {dt:"Monday 4pm - 6pm"}) MERGE (m)-[:TUAGHT_AT]->(d)
+
+//5.
+MATCH (m:Module {name:"Server Side RAD"}), (d:DayTime {dt:"Monday 4pm - 6pm"}) MERGE (m)-[:TUAGHT_AT]->(d)
+
+//6.
+MATCH (m:Module {name:"Software Testing"}), (d:DayTime {dt:"Tuesday 9am - 11am"}) MERGE (m)-[:TUAGHT_AT]->(d)
+
+//7.
+MATCH (m:Module {name:"Database Management Systems"}), (d:DayTime {dt:"Tuesday 9am - 11am"}) MERGE (m)-[:TUAGHT_AT]->(d)
+
+//8.
+MATCH (m:Module {name:"Database Management Systems"}), (d:DayTime {dt:"Tuesday 11am - 1pm"}) MERGE (m)-[:TUAGHT_AT]->(d)
+
+//9.
+MATCH (m:Module {name:"Mobile Application Development 2"}), (d:DayTime {dt:"Tuesday 11am - 1pm"}) MERGE (m)-[:TUAGHT_AT]->(d)
+
+//10.
+MATCH (m:Module {name:"Graph Theory"}), (d:DayTime {dt:"Tuesday 12pm - 1pm"}) MERGE (m)-[:TUAGHT_AT]->(d)
+
+//11.
+MATCH (m:Module {name:"Software Testing"}), (d:DayTime {dt:"Tuesday 2pm - 4pm"}) MERGE (m)-[:TUAGHT_AT]->(d)
+
+//12.
+MATCH (m:Module {name:"Server Side RAD"}), (d:DayTime {dt:"Tuesday 4pm - 6pm"}) MERGE (m)-[:TUAGHT_AT]->(d)
+
+//13.
+MATCH (m:Module {name:"Graph Theory"}), (d:DayTime {dt:"Wednesday 9am - 10am"}) MERGE (m)-[:TUAGHT_AT]->(d)
+
+//14.
+MATCH (m:Module {name:"Graph Theory"}), (d:DayTime {dt:"Wednesday 10am - 11am"}) MERGE (m)-[:TUAGHT_AT]->(d)
+
+//15.
+MATCH (m:Module {name:"Server Side RAD"}), (d:DayTime {dt:"Wednesday 1pm - 2pm"}) MERGE (m)-[:TUAGHT_AT]->(d)
+
+//16.
+MATCH (m:Module {name:"Software Testing"}), (d:DayTime {dt:"Wednesday 3pm - 4pm"}) MERGE (m)-[:TUAGHT_AT]->(d)
+
+//17.
+MATCH (m:Module {name:"Database Management Systems"}), (d:DayTime {dt:"Wednesday 4pm - 5pm"}) MERGE (m)-[:TUAGHT_AT]->(d)
+
+//18.
+MATCH (m:Module {name:"Mobile Application Development 2"}), (d:DayTime {dt:"Thursday 9am - 11am"}) MERGE (m)-[:TUAGHT_AT]->(d)
+
+//19.
+MATCH (m:Module {name:"Mobile Application Development 2"}), (d:DayTime {dt:"Thursday 11am - 1pm"}) MERGE (m)-[:TUAGHT_AT]->(d)
+
+//20.
+MATCH (m:Module {name:"Database Management Systems"}), (d:DayTime {dt:"Thursday 2pm - 4pm"}) MERGE (m)-[:TUAGHT_AT]->(d)
+
+//21.
+MATCH (m:Module {name:"Server Side RAD"}), (d:DayTime {dt:"Thursday 2pm - 4pm"}) MERGE (m)-[:TUAGHT_AT]->(d)
+
+//22.
+MATCH (m:Module {name:"Database Management Systems"}), (d:DayTime {dt:"Friday 9am - 11am"}) MERGE (m)-[:TUAGHT_AT]->(d)
+
+//23.
+MATCH (m:Module {name:"Graph Theory"}), (d:DayTime {dt:"Friday 11am - 12pm"}) MERGE (m)-[:TUAGHT_AT]->(d)
+
+
+
+#### LECTURER & DAYTIME ####
+//1.
+MATCH (l:Lecturer { name: 'Deirdre ODonovan' }), (d:DayTime { dt: 'Monday 10am - 11am' })
+MERGE (l)-[:TEACHING_AT]->(d)
+
+//2. 
+MATCH (l:Lecturer { name: 'Damien Costello' }), (d:DayTime { dt: 'Monday 12pm - 2pm' })
+MERGE (l)-[:TEACHING_AT]->(d)
+
+//3.
+MATCH (l:Lecturer { name: 'Ian McLoughlin' }), (d:DayTime { dt: 'Monday 2pm - 3pm' })
+MERGE (l)-[:TEACHING_AT]->(d)
+
+//4.
+MATCH (l:Lecturer { name: 'Martin Hynes' }), (d:DayTime { dt: 'Monday 4pm - 6pm' })
+MERGE (l)-[:TEACHING_AT]->(d)
+
+//5.
+MATCH (l:Lecturer { name: 'Gerard Harrison' }), (d:DayTime { dt: 'Monday 4pm - 6pm' })
+MERGE (l)-[:TEACHING_AT]->(d)
+
+//6.
+MATCH (l:Lecturer { name: 'Martin Hynes' }), (d:DayTime { dt: 'Tuesday 9am - 11am' })
+MERGE (l)-[:TEACHING_AT]->(d)
+
+//7.
+MATCH (l:Lecturer { name: 'Deirdre ODonovan' }), (d:DayTime { dt: 'Tuesday 9am - 11am' })
+MERGE (l)-[:TEACHING_AT]->(d)
+
+//8.
+MATCH (l:Lecturer { name: 'Deirdre ODonovan' }), (d:DayTime { dt: 'Tuesday 11am - 1pm' })
+MERGE (l)-[:TEACHING_AT]->(d)
+
+//9.
+MATCH (l:Lecturer { name: 'Damein Costello' }), (d:DayTime { dt: 'Tuesday 11am - 1pm' })
+MERGE (l)-[:TEACHING_AT]->(d)
+
+//10.
+MATCH (l:Lecturer { name: 'Ian McLoughlin' }), (d:DayTime { dt: 'Tuesday 12pm - 1pm' })
+MERGE (l)-[:TEACHING_AT]->(d)
+
+//11.
+MATCH (l:Lecturer { name: 'Martin Hynes' }), (d:DayTime { dt: 'Tuesday 2pm - 4pm' })
+MERGE (l)-[:TEACHING_AT]->(d)
+
+//12.
+MATCH (l:Lecturer { name: 'Gerard Harrison' }), (d:DayTime { dt: 'Tuesday 4pm - 6pm' })
+MERGE (l)-[:TEACHING_AT]->(d)
+
+//13.
+MATCH (l:Lecturer { name: 'Ian McLoughlin' }), (d:DayTime { dt: 'Wednesday 9am - 10am' })
+MERGE (l)-[:TEACHING_AT]->(d)
+
+//14.
+MATCH (l:Lecturer { name: 'Ian McLoughlin' }), (d:DayTime { dt: 'Wednesday 10am - 11am' })
+MERGE (l)-[:TEACHING_AT]->(d)
+
+//15.
+MATCH (l:Lecturer { name: 'Gerard Harrison' }), (d:DayTime { dt: 'Wednesday 1pm - 2pm' })
+MERGE (l)-[:TEACHING_AT]->(d)
+
+//16.
+MATCH (l:Lecturer { name: 'Martin Hynes' }), (d:DayTime { dt: 'Wednesday 3pm - 4pm' })
+MERGE (l)-[:TEACHING_AT]->(d)
+
+//17.
+MATCH (l:Lecturer { name: 'Deirdre ODonovan' }), (d:DayTime { dt: 'Wednesday 4pm - 5pm' })
+MERGE (l)-[:TEACHING_AT]->(d)
+
+//18.
+MATCH (l:Lecturer { name: 'Damien Costello' }), (d:DayTime { dt: 'Thursday 9am - 11am' })
+MERGE (l)-[:TEACHING_AT]->(d)
+
+//19.
+MATCH (l:Lecturer { name: 'Damien Costello' }), (d:DayTime { dt: 'Thursday 11am - 1pm' })
+MERGE (l)-[:TEACHING_AT]->(d)
+
+//20.
+MATCH (l:Lecturer { name: 'Deirdre ODonovan' }), (d:DayTime { dt: 'Thursday 2pm - 4pm' })
+MERGE (l)-[:TEACHING_AT]->(d)
+
+//21.
+MATCH (l:Lecturer { name: 'Gerard Harrison' }), (d:DayTime { dt: 'Thursday 2pm - 4pm' })
+MERGE (l)-[:TEACHING_AT]->(d)
+
+//22.
+MATCH (l:Lecturer { name: 'Deirdre ODonovan' }), (d:DayTime { dt: 'Friday 9am - 11am' })
+MERGE (l)-[:TEACHING_AT]->(d)
+
+//23.
+MATCH (l:Lecturer { name: 'Ian McLoughlin' }), (d:DayTime { dt: 'Friday 11am - 12pm' })
+MERGE (l)-[:TEACHING_AT]->(d)
+
+#### MODULE & ROOM ####
+//1.
+MATCH (m:Module {name:"Database Management Systems"}), (r:Room {room:"G0994"}) MERGE (m)-[:TAKES_PLACE]->(r)
+
+//2.
+MATCH (m:Module {name:"Mobile Application Development 2"}), (r:Room {room:"G0223"}) MERGE (m)-[:TAKES_PLACE]->(r)
+
+//3.
+MATCH (m:Module {name:"Graph Theory"}), (r:Room {room:"PF 05"}) MERGE (m)-[:TAKES_PLACE]->(r)
+
+//4.
+MATCH (m:Module {name:"Software Testing"}), (r:Room {room:"G0481"}) MERGE (m)-[:TAKES_PLACE]->(r)
+
+//5.
+MATCH (m:Module {name:"Server Side RAD"}), (r:Room {room:"G0436"}) MERGE (m)-[:TAKES_PLACE]->(r)
+
+//6.
+MATCH (m:Module {name:"Software Testing"}), (r:Room {room:"G0436"}) MERGE (m)-[:TAKES_PLACE]->(r)
+
+//7.
+MATCH (m:Module {name:"Database Management Systems"}), (r:Room {room:"G0481"}) MERGE (m)-[:TAKES_PLACE]->(r)
+
+//8.
+MATCH (m:Module {name:"Database Management Systems"}), (r:Room {room:"G0482"}) MERGE (m)-[:TAKES_PLACE]->(r)
+
+//9.
+MATCH (m:Module {name:"Mobile Application Development 2"}), (r:Room {room:"G0470"}) MERGE (m)-[:TAKES_PLACE]->(r)
+
+//10.
+MATCH (m:Module {name:"Graph Theory"}), (r:Room {room:"G0379"}) MERGE (m)-[:TAKES_PLACE]->(r)
+
+//11.
+MATCH (m:Module {name:"Software Testing"}), (r:Room {room:"G0436"}) MERGE (m)-[:TAKES_PLACE]->(r)
+
+//12.
+MATCH (m:Module {name:"Graph Theory"}), (r:Room {room:"G0162"}) MERGE (m)-[:TAKES_PLACE]->(r)
+
+//13.
+MATCH (m:Module {name:"Graph Theory"}), (r:Room {room:"G0938"}) MERGE (m)-[:TAKES_PLACE]->(r)
+
+//14.
+MATCH (m:Module {name:"Server Side RAD"}), (r:Room {room:"G0997"}) MERGE (m)-[:TAKES_PLACE]->(r)
+
+//15.
+MATCH (m:Module {name:"Software Testing"}), (r:Room {room:"G0939"}) MERGE (m)-[:TAKES_PLACE]->(r)
+
+//16.
+MATCH (m:Module {name:"Database Management Systems"}), (r:Room {room:"G0995"}) MERGE (m)-[:TAKES_PLACE]->(r)
+
+//17.
+MATCH (m:Module {name:"Mobile Application Development 2"}), (r:Room {room:"PF 18"}) MERGE (m)-[:TAKES_PLACE]->(r)
+
+//18.
+MATCH (m:Module {name:"Database Management Systems"}), (r:Room {room:"G0483"}) MERGE (m)-[:TAKES_PLACE]->(r)
+
+//19.
+MATCH (m:Module {name:"Graph Theory"}), (r:Room {room:"G0208"}) MERGE (m)-[:TAKES_PLACE]->(r)
+
+
+
+
+#### GROUP & DAYTIME (FOR LECTURES) ####
+//1.
+MATCH (g:Group {group:"A"}), (d:DayTime { dt: 'Monday 10am - 11am' })
+MERGE (g)-[:ATTENDS]->(d)
+MATCH (g:Group {group:"B"}), (d:DayTime { dt: 'Monday 10am - 11am' })
+MERGE (g)-[:ATTENDS]->(d)
+MATCH (g:Group {group:"C"}), (d:DayTime { dt: 'Monday 10am - 11am' })
+MERGE (g)-[:ATTENDS]->(d)
+
+//2.
+MATCH (g:Group {group:"A"}), (d:DayTime { dt: 'Monday 12pm - 2pm' })
+MERGE (g)-[:ATTENDS]->(d)
+MATCH (g:Group {group:"B"}), (d:DayTime { dt: 'Monday 12pm - 2pm' })
+MERGE (g)-[:ATTENDS]->(d)
+MATCH (g:Group {group:"C"}), (d:DayTime { dt: 'Monday 12pm - 2pm' })
+MERGE (g)-[:ATTENDS]->(d)
+
+//3.
+MATCH (g:Group {group:"A"}), (d:DayTime { dt: 'Wednesday 10am - 11am' })
+MERGE (g)-[:ATTENDS]->(d)
+MATCH (g:Group {group:"B"}), (d:DayTime { dt: 'Wednesday 10am - 11am' })
+MERGE (g)-[:ATTENDS]->(d)
+MATCH (g:Group {group:"C"}), (d:DayTime { dt: 'Wednesday 10am - 11am' })
+MERGE (g)-[:ATTENDS]->(d)
+
+//4.
+MATCH (g:Group {group:"A"}), (d:DayTime { dt: 'Wednesday 1pm - 2pm' })
+MERGE (g)-[:ATTENDS]->(d)
+MATCH (g:Group {group:"B"}), (d:DayTime { dt: 'Wednesday 1pm - 2pm' })
+MERGE (g)-[:ATTENDS]->(d)
+MATCH (g:Group {group:"C"}), (d:DayTime { dt: 'Wednesday 1pm - 2pm' })
+MERGE (g)-[:ATTENDS]->(d)
+
+//5.
+MATCH (g:Group {group:"A"}), (d:DayTime { dt: 'Wednesday 3pm - 4pm' })
+MERGE (g)-[:ATTENDS]->(d)
+MATCH (g:Group {group:"B"}), (d:DayTime { dt: 'Wednesday 3pm - 4pm' })
+MERGE (g)-[:ATTENDS]->(d)
+MATCH (g:Group {group:"C"}), (d:DayTime { dt: 'Wednesday 3pm - 4pm' })
+MERGE (g)-[:ATTENDS]->(d)
+
+//6.
+MATCH (g:Group {group:"A"}), (d:DayTime { dt: 'Wednesday 4pm - 5pm' })
+MERGE (g)-[:ATTENDS]->(d)
+MATCH (g:Group {group:"B"}), (d:DayTime { dt: 'Wednesday 4pm - 5pm' })
+MERGE (g)-[:ATTENDS]->(d)
+MATCH (g:Group {group:"C"}), (d:DayTime { dt: 'Wednesday 4pm - 5pm' })
+MERGE (g)-[:ATTENDS]->(d)
+
+//7.
+MATCH (g:Group {group:"A"}), (d:DayTime { dt: 'Friday 11am - 12pm' })
+MERGE (g)-[:ATTENDS]->(d)
+MATCH (g:Group {group:"B"}), (d:DayTime { dt: 'Friday 11am - 12pm' })
+MERGE (g)-[:ATTENDS]->(d)
+MATCH (g:Group {group:"C"}), (d:DayTime { dt: 'Friday 11am - 12pm' })
+MERGE (g)-[:ATTENDS]->(d)
